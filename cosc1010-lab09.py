@@ -1,12 +1,10 @@
-# Your Name Here
+# Tyler Hegy
 # UWYO COSC 1010
-# Submission Date
-# Lab XX
-# Lab Section:
-# Sources, people worked with, help given to:
-# Your
-# Comments
-# Here
+# Submission Date: 11/14/2024
+# Lab 09
+# Lab Section: 12
+# Sources, people worked with, help given to:None
+# Comments: None
 
 # Classes
 # For this assignment, you will be creating two classes:
@@ -34,7 +32,30 @@
 # - Assign the parameter for size to a size attribute.
 # - Assign the parameter for sauce to the attribute.
 # - Create the toppings attribute, starting off as a list only holding cheese.
-
+class Pizza:
+    """A class defining your pizza"""
+    def __init__(self, size, sauce = "red"):
+        self.set_size(size)
+        self.sauce = sauce
+        self.toppings = ["cheese"]
+    def set_size(self, size):
+        if size.isnumeric() and int(size)>10:
+            self.size = int(size)
+        else:
+            self.size = 10
+    def get_size(self):
+        return self.size
+    def get_sauce(self):
+        return self.sauce
+    def set_sauce(self, sauce):
+        self.sauce = sauce
+    def get_toppings(self):
+        return self.toppings
+    def set_toppings(self, new_toppings):
+        for i in new_toppings:
+            self.toppings.append(i)
+    def getAmountOfToppings(self):
+        return len(self.toppings)
 
 # You will be creating a Pizzeria class with the following attributes:
 # - orders, the number of orders placed. Should start at 0.
@@ -70,7 +91,48 @@
 # - getNumberOfOrders()
 #   - This will simply return the number of orders.
 
-
+class Pizzeria:
+    """A class to calculate prices and manage pizzas"""
+    price_per_topping = 0.30
+    price_per_inch = 0.60
+    def __init__(self):
+        self.orders = 0
+        self.pizzas = []
+    def placeOrder(self):
+        size = (input("Please enter the size of pizza, as a whole number. The smallest size is 10: "))
+        sauce = input('What kind of sauce would you like?\nLeave blank for Red Sauce: ')
+        if sauce =='':
+            sauce= "red"
+        toppings = []
+        while True:
+            topping = input("Please enter the toppings you would like (enter after each one), leave blank when done: ")
+            if topping == '':
+                break
+            else:
+                toppings.append(topping)
+        pizza = Pizza(size, sauce)
+        pizza.set_toppings(toppings)
+        self.pizzas.append(pizza)
+        self.getReceipt()
+    def getPrice(self):
+        pizza = self.pizzas[-1]
+        size_price = pizza.get_size() * Pizzeria.price_per_inch
+        topping_price = pizza.getAmountOfToppings() * Pizzeria.price_per_topping
+        total_price = size_price + topping_price
+        return total_price
+    def getReceipt(self):
+        pizza = self.pizzas[-1]
+        price_size = pizza.get_size()*Pizzeria.price_per_inch
+        price_toppings = pizza.getAmountOfToppings()*Pizzeria.price_per_topping
+        price_total = self.getPrice()
+        print(f'You ordered a {pizza.get_size()}" pizza with {pizza.get_sauce()} sauce and the following toppings:\n {pizza.get_toppings()} ')
+        print(f'You ordered a {pizza.get_size()}" pizza for ${price_size}')
+        print(f'You had {pizza.getAmountOfToppings()} topping(s) for ${price_toppings}')
+        print(f'Your total price is ${price_total}')
+    def getNumberOfOrders(self):
+        self.orders+=1
+        return self.orders
+    
 # - Declare your pizzeria object.
 # - Enter a while loop to ask if the user wants to order a pizza.
 # - Exit on the word `exit`.
@@ -78,8 +140,17 @@
 # - After the order is placed, call the getReceipt() method.
 # - Repeat the loop as needed.
 # - AFTER the loop, print how many orders were placed.
+def main():
+    pizzeria = Pizzeria()
+    while True:
+        info = input("Would you like to place an order? 'exit' to exit: ")
+        if info.lower() == 'exit':
+            break
+        else:
+            pizzeria.placeOrder()
 
-
+if __name__ == "__main__":
+    main()
 # Example output:
 """
 Would you like to place an order? exit to exit
@@ -100,6 +171,3 @@ You ordered a 20" pizza with garlic sauce and the following toppings:
 You ordered a 20" pizza for 12.0
 You had 3 topping(s) for $0.8999999999999999
 Your total price is $12.9
-
-Would you like to place an order? exit to exit
-"""
