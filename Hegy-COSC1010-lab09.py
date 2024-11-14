@@ -178,6 +178,3 @@ Your total price is $12.9
 
 Would you like to place an order? exit to exit
 """
-
-Would you like to place an order? exit to exit
-"""
