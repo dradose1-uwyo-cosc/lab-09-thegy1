@@ -104,8 +104,9 @@ class Pizzeria:
         if sauce =='':
             sauce= "red"
         toppings = []
+        print("Please enter the toppings you would like (enter after each one), leave blank when done: ")
         while True:
-            topping = input("Please enter the toppings you would like (enter after each one), leave blank when done: ")
+            topping = input()
             if topping == '':
                 break
             else:
@@ -113,6 +114,7 @@ class Pizzeria:
         pizza = Pizza(size, sauce)
         pizza.set_toppings(toppings)
         self.pizzas.append(pizza)
+        self.orders+=1
         self.getReceipt()
     def getPrice(self):
         pizza = self.pizzas[-1]
@@ -130,7 +132,6 @@ class Pizzeria:
         print(f'You had {pizza.getAmountOfToppings()} topping(s) for ${price_toppings}')
         print(f'Your total price is ${price_total}')
     def getNumberOfOrders(self):
-        self.orders+=1
         return self.orders
     
 # - Declare your pizzeria object.
@@ -171,3 +172,6 @@ You ordered a 20" pizza with garlic sauce and the following toppings:
 You ordered a 20" pizza for 12.0
 You had 3 topping(s) for $0.8999999999999999
 Your total price is $12.9
+
+Would you like to place an order? exit to exit
+"""
